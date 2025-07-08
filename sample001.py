@@ -52,17 +52,14 @@ for pair in get_low_n_pairs(nth):
     )
 
 print("spread:")
-spread = Decimal(get_high_n_pairs(nth)[0]["priceUsd"]) - Decimal(
-    get_low_n_pairs(nth)[0]["priceUsd"]
-)
+high = Decimal(get_high_n_pairs(nth)[0]["priceUsd"])
+low = Decimal(get_low_n_pairs(nth)[0]["priceUsd"])
+spread = abs(high - low)
 print(spread)
+
 print("spread_pct:")
-spread_pct = (
-    abs(
-        Decimal(get_high_n_pairs(nth)[0]["priceUsd"])
-        - Decimal(get_low_n_pairs(nth)[0]["priceUsd"])
-    )
-    / Decimal(get_low_n_pairs(nth)[0]["priceUsd"])
-    * 100
-)
+spread_pct = spread / min(high, low) * 100
 print(spread_pct)
+
+if spread_pct > 0.1:
+    print("detected! spread is over 0.1%")
