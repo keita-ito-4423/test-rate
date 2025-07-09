@@ -15,6 +15,11 @@ def get_high_n_pairs(n):
     return sorted_pairs[:n]
 
 
+def calc_price_diff(price_a, price_b):
+    diff = abs(price_a - price_b) / min(price_a, price_b) * 100
+    return diff
+
+
 url = "https://api.dexscreener.com/latest/dex/search?q=USDT/USDC"
 response = requests.get(url)
 data = response.json()
@@ -58,7 +63,7 @@ spread = abs(high - low)
 print(spread)
 
 print("spread_pct:")
-spread_pct = spread / min(high, low) * 100
+spread_pct = calc_price_diff(high, low)
 print(spread_pct)
 
 if spread_pct > 0.1:
